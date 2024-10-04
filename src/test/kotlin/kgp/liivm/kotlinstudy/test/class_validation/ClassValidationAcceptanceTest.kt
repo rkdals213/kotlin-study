@@ -1,4 +1,4 @@
-package kgp.liivm.kotlinstudy.class_validation
+package kgp.liivm.kotlinstudy.test.class_validation
 
 import io.kotest.matchers.shouldBe
 import kgp.liivm.kotlinstudy.common.acceptance.*

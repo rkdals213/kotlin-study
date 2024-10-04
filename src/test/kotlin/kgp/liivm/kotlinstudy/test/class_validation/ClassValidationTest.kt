@@ -1,9 +1,10 @@
-package kgp.liivm.kotlinstudy.class_validation
+package kgp.liivm.kotlinstudy.test.class_validation
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import kgp.liivm.kotlinstudy.class_validation.PhoneNumber
 
 class ClassValidationTest : BehaviorSpec({
 

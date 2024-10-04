@@ -1,7 +1,8 @@
-package kgp.liivm.kotlinstudy.null_check
+package kgp.liivm.kotlinstudy.test.null_check
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldNotBe
+import kgp.liivm.kotlinstudy.null_check.MemberRepository
 
 class NullCheckTest: BehaviorSpec({
 

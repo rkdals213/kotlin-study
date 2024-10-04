@@ -1,4 +1,4 @@
-package kgp.liivm.kotlinstudy.function_extension
+package kgp.liivm.kotlinstudy.test.function_extension
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
