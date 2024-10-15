@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-@DisplayName("Class Validation Tests")
 class ClassValidationAcceptanceTest @Autowired constructor(
     databaseCleanup: DatabaseCleanup,
 ) : AcceptanceTest(databaseCleanup) {

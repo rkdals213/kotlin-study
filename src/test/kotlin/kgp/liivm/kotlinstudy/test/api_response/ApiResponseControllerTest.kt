@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.math.BigDecimal
 
-class ApiResponseControllerTest @Autowired constructor(
+class ApiResponseAcceptanceTest @Autowired constructor(
     databaseCleanup: DatabaseCleanup,
 ) : AcceptanceTest(databaseCleanup) {
 
