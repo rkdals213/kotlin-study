@@ -32,9 +32,13 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.12")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.9.1")
     testImplementation("io.kotest:kotest-assertions-core-jvm:5.9.1")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.3.0")
+
     testImplementation("io.rest-assured:rest-assured:5.5.0")
     testImplementation("io.rest-assured:kotlin-extensions:5.5.0")
     implementation("com.google.guava:guava:33.3.0-jre")
+
+    implementation("org.springframework:spring-jdbc")
 }
 
 kotlin {
