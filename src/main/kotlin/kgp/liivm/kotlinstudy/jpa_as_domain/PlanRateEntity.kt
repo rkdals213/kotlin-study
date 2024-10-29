@@ -3,9 +3,12 @@ package kgp.liivm.kotlinstudy.jpa_as_domain
 import jakarta.persistence.DiscriminatorValue
 import jakarta.persistence.Embeddable
 import jakarta.persistence.Entity
+import jakarta.persistence.Table
 
 @Entity
 @DiscriminatorValue("PlanRate")
+@Table(name = "rate_entity")
+
 class PlanRateEntity(
     id: Long = 0L,
 
