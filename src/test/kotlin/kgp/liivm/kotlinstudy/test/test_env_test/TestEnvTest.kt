@@ -34,7 +34,7 @@ class TestEnvTest : FunSpec({
                 }
             """.trimIndent()
 
-        test("데이터 1만 리턴된다") {
+        test("1만 리턴된다") {
             postResource(
                 request = givenRequestSpecification(),
                 url = "/kotest-restassured/insert",
@@ -59,7 +59,7 @@ class TestEnvTest : FunSpec({
                 }
             """.trimIndent()
 
-        test("데이터 2만 리턴된다") {
+        test("2만 리턴된다") {
             postResource(
                 request = givenRequestSpecification(),
                 url = "/kotest-restassured/insert",

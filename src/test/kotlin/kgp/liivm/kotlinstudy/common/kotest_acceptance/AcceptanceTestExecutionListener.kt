@@ -20,6 +20,7 @@ class AcceptanceTestExecutionListener : AbstractTestExecutionListener() {
         val jdbcTemplate = testContext.applicationContext.getBean(JdbcTemplate::class.java)
 
         val tableNames = getTableNames(jdbcTemplate)
+        println("table names$tableNames")
 
         transactionTemplate.execute(object : TransactionCallbackWithoutResult() {
             override fun doInTransactionWithoutResult(status: TransactionStatus) {

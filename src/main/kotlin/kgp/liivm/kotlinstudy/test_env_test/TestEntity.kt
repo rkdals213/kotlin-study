@@ -1,4 +1,4 @@
-package kgp.liivm.kotlinstudy.domain
+package kgp.liivm.kotlinstudy.test_env_test
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
