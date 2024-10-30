@@ -7,8 +7,7 @@ import jakarta.persistence.Table
 
 @Entity
 @DiscriminatorValue("DiscountRate")
-@Table(name = "rate_entity")
-
+@Table(catalog = "kotlin_study", name = "rate_entity")
 class DiscountRateEntity(
     id: Long = 0L,
 

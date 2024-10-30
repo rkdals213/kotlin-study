@@ -17,8 +17,8 @@ class AcceptanceTestExecutionListener : AbstractTestExecutionListener() {
     }
 
     override fun beforeTestMethod(testContext: TestContext) {
-        clearDatabaseWithJDBC(testContext)
-//        clearDatabaseWithJPA(testContext)
+//        clearDatabaseWithJDBC(testContext)
+        clearDatabaseWithJPA(testContext)
     }
 
     private fun clearDatabaseWithJPA(testContext: TestContext) {
@@ -32,6 +32,7 @@ class AcceptanceTestExecutionListener : AbstractTestExecutionListener() {
                 entityManager.flush()
                 entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate()
                 for (tableName in tableNames) {
+                    println("tableName : " + tableName)
                     entityManager.createNativeQuery("TRUNCATE TABLE $tableName").executeUpdate()
                     entityManager.createNativeQuery("ALTER TABLE $tableName ALTER COLUMN ID RESTART WITH 1").executeUpdate()
                 }
@@ -59,12 +60,12 @@ class AcceptanceTestExecutionListener : AbstractTestExecutionListener() {
     }
 
     private fun getTableNames(entityManager: EntityManager): List<String> {
-        return entityManager.createNativeQuery("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'PUBLIC'")
+        return entityManager.createNativeQuery("SELECT CONCAT(TABLE_SCHEMA, '.', TABLE_NAME) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'KOTLIN_STUDY'")
             .resultList
             .map { it.toString() }
     }
 
     private fun getTableNames(jdbcTemplate: JdbcTemplate): List<String> {
-        return jdbcTemplate.queryForList("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'PUBLIC'", String::class.java)
+        return jdbcTemplate.queryForList("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'KOTLIN_STUDY'", String::class.java)
     }
 }

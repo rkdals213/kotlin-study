@@ -28,7 +28,7 @@ class DatabaseCleanup(
 
                 if (it.javaType.getAnnotation(Table::class.java) != null) {
                     val annotation = it.javaType.getAnnotation(Table::class.java)
-                    name = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, annotation.name)
+                    name = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, annotation.catalog) + "." + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, annotation.name)
                 } else if (it.javaType.getAnnotation(Entity::class.java) != null) {
                     val annotation = it.javaType.getAnnotation(Entity::class.java)
                     name = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, annotation.name)

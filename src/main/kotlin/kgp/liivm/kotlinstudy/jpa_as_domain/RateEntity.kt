@@ -5,7 +5,7 @@ import jakarta.persistence.*
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
-@Table(name = "rate_entity")
+@Table(catalog = "kotlin_study", name = "rate_entity")
 abstract class RateEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
