@@ -60,12 +60,12 @@ class AcceptanceTestExecutionListener : AbstractTestExecutionListener() {
     }
 
     private fun getTableNames(entityManager: EntityManager): List<String> {
-        return entityManager.createNativeQuery("SELECT CONCAT(TABLE_SCHEMA, '.', TABLE_NAME) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'KOTLIN_STUDY'")
+        return entityManager.createNativeQuery("SELECT CONCAT(TABLE_SCHEMA, '.', TABLE_NAME) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA IN ('KOTLIN_STUDY', 'PUBLIC')")
             .resultList
             .map { it.toString() }
     }
 
     private fun getTableNames(jdbcTemplate: JdbcTemplate): List<String> {
-        return jdbcTemplate.queryForList("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'KOTLIN_STUDY'", String::class.java)
+        return jdbcTemplate.queryForList("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA IN ('KOTLIN_STUDY', 'PUBLIC')", String::class.java)
     }
 }
