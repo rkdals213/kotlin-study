@@ -43,14 +43,14 @@ class Batch02(
     fun batch02Step(): Step {
         return StepBuilder("batch02Step", jobRepository)
             .chunk<BatchStudyDataEntity, BatchStudyDataEntity>(1000, transactionManager)
-            .reader(batch02Reader())
-//            .reader(batch02Reader2())
+//            .reader(batch02JpaPagingReader())
+            .reader(batch02JdbcCursorReader())
             .writer(batch02Writer())
             .build()
     }
 
     @Bean
-    fun batch02Reader(): JpaPagingItemReader<BatchStudyDataEntity> {
+    fun batch02JpaPagingReader(): JpaPagingItemReader<BatchStudyDataEntity> {
         return JpaPagingItemReaderBuilder<BatchStudyDataEntity>()
             .name("batch02Reader")
             .pageSize(100000)
@@ -60,7 +60,7 @@ class Batch02(
     }
 
     @Bean
-    fun batch02Reader2(): JdbcCursorItemReader<BatchStudyDataEntity> {
+    fun batch02JdbcCursorReader(): JdbcCursorItemReader<BatchStudyDataEntity> {
         return JdbcCursorItemReaderBuilder<BatchStudyDataEntity>()
             .name("batch02Reader")
             .sql("SELECT id, name, birthday, address FROM batch_study_data_entity b")
