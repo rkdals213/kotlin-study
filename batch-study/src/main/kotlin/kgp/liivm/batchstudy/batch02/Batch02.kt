@@ -29,8 +29,6 @@ class Batch02(
     private val entityManagerFactory: EntityManagerFactory,
     private val dataSource: DataSource,
 ) {
-    var current = 0
-
     @Bean
     fun batch02Job(): Job {
         return JobBuilder("batch02Job", jobRepository)
