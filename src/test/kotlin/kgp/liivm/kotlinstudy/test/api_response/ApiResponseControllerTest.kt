@@ -2,18 +2,15 @@ package kgp.liivm.kotlinstudy.test.api_response
 
 import io.kotest.matchers.shouldBe
 import kgp.liivm.kotlinstudy.api_response.TestData
-import kgp.liivm.kotlinstudy.common.acceptance.AcceptanceTest
-import kgp.liivm.kotlinstudy.common.acceptance.DatabaseCleanup
 import kgp.liivm.kotlinstudy.common.acceptance.getResource
 import kgp.liivm.kotlinstudy.common.acceptance.givenRequestSpecification
+import kgp.liivm.kotlinstudy.common.acceptance.AcceptanceTest
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 import java.math.BigDecimal
 
-class ApiResponseAcceptanceTest @Autowired constructor(
-    databaseCleanup: DatabaseCleanup,
-) : AcceptanceTest(databaseCleanup) {
+@AcceptanceTest
+class ApiResponseAcceptanceTest {
 
     @Test
     @DisplayName("단일객체가 리턴되는 응답값 검증")

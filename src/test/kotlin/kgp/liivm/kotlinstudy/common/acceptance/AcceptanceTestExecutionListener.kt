@@ -1,4 +1,4 @@
-package kgp.liivm.kotlinstudy.common.kotest_acceptance
+package kgp.liivm.kotlinstudy.common.acceptance
 
 import io.restassured.RestAssured
 import jakarta.persistence.EntityManager
@@ -32,7 +32,6 @@ class AcceptanceTestExecutionListener : AbstractTestExecutionListener() {
                 entityManager.flush()
                 entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate()
                 for (tableName in tableNames) {
-                    println("tableName : " + tableName)
                     entityManager.createNativeQuery("TRUNCATE TABLE $tableName").executeUpdate()
                     entityManager.createNativeQuery("ALTER TABLE $tableName ALTER COLUMN ID RESTART WITH 1").executeUpdate()
                 }

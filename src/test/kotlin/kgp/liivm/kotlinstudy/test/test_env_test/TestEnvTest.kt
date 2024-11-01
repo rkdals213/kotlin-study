@@ -6,9 +6,9 @@ import io.kotest.matchers.shouldBe
 import kgp.liivm.kotlinstudy.common.acceptance.getResource
 import kgp.liivm.kotlinstudy.common.acceptance.givenRequestSpecification
 import kgp.liivm.kotlinstudy.common.acceptance.postResource
-import kgp.liivm.kotlinstudy.common.kotest_acceptance.KoTestAcceptanceTest
+import kgp.liivm.kotlinstudy.common.acceptance.AcceptanceTest
 
-@KoTestAcceptanceTest
+@AcceptanceTest
 class TestEnvTest : FunSpec({
 
     context("kotest와 restassured를 사용한 테스트") {

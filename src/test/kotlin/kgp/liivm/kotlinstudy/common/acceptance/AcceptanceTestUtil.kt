@@ -1,7 +1,6 @@
 package kgp.liivm.kotlinstudy.common.acceptance
 
 import io.restassured.RestAssured
-import io.restassured.filter.Filter
 import io.restassured.http.ContentType
 import io.restassured.response.ExtractableResponse
 import io.restassured.response.Response

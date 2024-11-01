@@ -1,14 +1,15 @@
 package kgp.liivm.kotlinstudy.test.class_validation
 
 import io.kotest.matchers.shouldBe
-import kgp.liivm.kotlinstudy.common.acceptance.*
+import kgp.liivm.kotlinstudy.common.acceptance.AcceptanceTest
+import kgp.liivm.kotlinstudy.common.acceptance.getResource
+import kgp.liivm.kotlinstudy.common.acceptance.givenRequestSpecification
+import kgp.liivm.kotlinstudy.common.acceptance.postResource
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 
-class ClassValidationAcceptanceTest @Autowired constructor(
-    databaseCleanup: DatabaseCleanup,
-) : AcceptanceTest(databaseCleanup) {
+@AcceptanceTest
+class ClassValidationAcceptanceTest {
 
     @Test
     @DisplayName("GET 요청으로 정확한 전화번호를 보내면 성공한다")

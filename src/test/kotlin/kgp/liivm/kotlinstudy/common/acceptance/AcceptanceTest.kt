@@ -1,26 +1,17 @@
 package kgp.liivm.kotlinstudy.common.acceptance
 
-import io.restassured.RestAssured
-import org.junit.jupiter.api.BeforeEach
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.TestExecutionListeners
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+@SpringBootTest(
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+)
+@TestExecutionListeners(
+    value = [AcceptanceTestExecutionListener::class],
+    mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS
+)
 @ActiveProfiles("test")
-class AcceptanceTest @Autowired constructor(
-    private val databaseCleanup: DatabaseCleanup,
-) {
-    @LocalServerPort
-    var port = 0
-
-    @BeforeEach
-    fun setUp() {
-        if (RestAssured.port == RestAssured.UNDEFINED_PORT) {
-            RestAssured.port = port
-            databaseCleanup.afterPropertiesSet()
-        }
-        databaseCleanup.execute()
-    }
-}
+annotation class AcceptanceTest
