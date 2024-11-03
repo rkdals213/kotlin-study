@@ -1,6 +1,12 @@
 package kgp.liivm.batchstudy.batch02
 
-import jakarta.persistence.*
+import com.querydsl.core.types.dsl.NumberPath
+import jakarta.persistence.EntityManagerFactory
+import kgp.liivm.batchstudy.common.entity.BatchStudyDataEntity
+import kgp.liivm.batchstudy.common.entity.QBatchStudyDataEntity.batchStudyDataEntity
+import kgp.liivm.batchstudy.common.querydsl_reader.QueryDslPagingItemReader
+import kgp.liivm.batchstudy.common.querydsl_reader.expression.Expression
+import kgp.liivm.batchstudy.common.querydsl_reader.options.QuerydslNoOffsetLongOptions
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobScope
@@ -18,8 +24,9 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.FileSystemResource
+import org.springframework.jdbc.core.DataClassRowMapper
 import org.springframework.transaction.PlatformTransactionManager
-import java.time.LocalDate
+import java.lang.reflect.Method
 import javax.sql.DataSource
 
 @Configuration
@@ -40,9 +47,10 @@ class Batch02(
     @JobScope
     fun batch02Step(): Step {
         return StepBuilder("batch02Step", jobRepository)
-            .chunk<BatchStudyDataEntity, BatchStudyDataEntity>(1000, transactionManager)
+            .chunk<BatchStudyDataEntity, BatchStudyDataEntity>(CHUNK_SIZE, transactionManager)
 //            .reader(batch02JpaPagingReader())
-            .reader(batch02JdbcCursorReader())
+//            .reader(batch02JdbcCursorReader())
+            .reader(batch02QueryDslPagingReader())
             .writer(batch02Writer())
             .build()
     }
@@ -51,7 +59,7 @@ class Batch02(
     fun batch02JpaPagingReader(): JpaPagingItemReader<BatchStudyDataEntity> {
         return JpaPagingItemReaderBuilder<BatchStudyDataEntity>()
             .name("batch02Reader")
-            .pageSize(100000)
+            .pageSize(CHUNK_SIZE)
             .entityManagerFactory(entityManagerFactory)
             .queryString("SELECT b FROM batch_study_data_entity b")
             .build()
@@ -61,17 +69,32 @@ class Batch02(
     fun batch02JdbcCursorReader(): JdbcCursorItemReader<BatchStudyDataEntity> {
         return JdbcCursorItemReaderBuilder<BatchStudyDataEntity>()
             .name("batch02Reader")
-            .sql("SELECT id, name, birthday, address FROM batch_study_data_entity b")
+            .rowMapper(DataClassRowMapper(BatchStudyDataEntity::class.java))
+            .sql("SELECT id, name, birthday, address FROM batch_study_data_entity b order by id desc")
             .dataSource(dataSource)
-            .rowMapper { rs, _ ->
-                BatchStudyDataEntity(
-                    id = rs.getLong(1),
-                    name = rs.getString(2),
-                    birthday = LocalDate.parse(rs.getString(3)),
-                    address = rs.getString(4),
-                )
-            }
             .build()
+    }
+
+    @Bean
+    fun batch02QueryDslPagingReader(): QueryDslPagingItemReader<BatchStudyDataEntity> {
+        val identifier: NumberPath<Long> = batchStudyDataEntity.id
+        val method: Method = BatchStudyDataEntity::class.java.getMethod("getId")
+
+        val queryDslPagingItemReader = QueryDslPagingItemReader<BatchStudyDataEntity>(
+            entityManagerFactory,
+            identifier,
+            method,
+            QuerydslNoOffsetLongOptions(batchStudyDataEntity.id, Expression.ASC)
+        )
+        queryDslPagingItemReader.pageSize = CHUNK_SIZE
+
+        queryDslPagingItemReader.queryFunction {
+            it.query()
+                .select(batchStudyDataEntity)
+                .from(batchStudyDataEntity)
+        }
+
+        return queryDslPagingItemReader
     }
 
     @Bean
@@ -90,17 +113,10 @@ class Batch02(
             .lineAggregator(aggregator)
             .build()
     }
-}
 
-@Entity(name = "batch_study_data_entity")
-class BatchStudyDataEntity(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-    val name: String,
-    val birthday: LocalDate,
-    val address: String
-) {
-    override fun toString(): String {
-        return "BatchStudyDataEntity(id=$id, name='$name', birthday=$birthday, address='$address')"
+    companion object {
+        private const val CHUNK_SIZE = 100000
     }
 }
+
+

@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.6"
     kotlin("plugin.jpa") version "1.9.25"
+//    kotlin("kapt")
 }
 
 group = "kgp.liivm"
@@ -40,6 +41,9 @@ dependencies {
     implementation("com.google.guava:guava:33.3.0-jre")
 
     implementation("org.springframework:spring-jdbc")
+
+    implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
+    implementation("com.querydsl:querydsl-apt:5.1.0:jakarta")
 }
 
 kotlin {
