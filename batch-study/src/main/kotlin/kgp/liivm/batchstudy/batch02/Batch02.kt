@@ -58,7 +58,7 @@ class Batch02(
     @Bean
     fun batch02JpaPagingReader(): JpaPagingItemReader<ReadJpaEntity> {
         return JpaPagingItemReaderBuilder<ReadJpaEntity>()
-            .name("batch02Reader")
+            .name("batch02JpaPagingReader")
             .pageSize(CHUNK_SIZE)
             .entityManagerFactory(entityManagerFactory)
             .queryString("SELECT b FROM batch_study_data_entity b")
@@ -68,7 +68,7 @@ class Batch02(
     @Bean
     fun batch02JdbcCursorReader(): JdbcCursorItemReader<ReadJpaEntity> {
         return JdbcCursorItemReaderBuilder<ReadJpaEntity>()
-            .name("batch02Reader")
+            .name("batch02JdbcCursorReader")
             .rowMapper(DataClassRowMapper(ReadJpaEntity::class.java))
             .sql("SELECT id, name, birthday, address FROM batch_study_data_entity b order by id desc")
             .dataSource(dataSource)
