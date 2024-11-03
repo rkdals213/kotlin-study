@@ -1,4 +1,4 @@
-package kgp.liivm.batchstudy.common.entity
+package kgp.liivm.batchstudy.common.jpa
 
 import com.querydsl.jpa.impl.JPAQuery
 import com.querydsl.jpa.impl.JPAQueryFactory

@@ -1,9 +1,9 @@
 package kgp.liivm.batchstudy.batch02
 
 import jakarta.persistence.EntityManagerFactory
-import kgp.liivm.batchstudy.common.entity.BatchStudyDataEntity
-import kgp.liivm.batchstudy.common.entity.QBatchStudyDataEntity.batchStudyDataEntity
-import kgp.liivm.batchstudy.common.entity.QuerydslNoOffsetPagingItemReaderBuilder
+import kgp.liivm.batchstudy.common.jpa.QReadJpaEntity.readJpaEntity
+import kgp.liivm.batchstudy.common.jpa.QuerydslNoOffsetPagingItemReaderBuilder
+import kgp.liivm.batchstudy.common.jpa.ReadJpaEntity
 import kgp.liivm.batchstudy.common.querydsl_reader.QuerydslNoOffsetPagingItemReader
 import kgp.liivm.batchstudy.common.querydsl_reader.expression.Expression
 import kgp.liivm.batchstudy.common.querydsl_reader.options.QuerydslNoOffsetNumberOptions
@@ -47,7 +47,7 @@ class Batch02(
     @JobScope
     fun batch02Step(): Step {
         return StepBuilder("batch02Step", jobRepository)
-            .chunk<BatchStudyDataEntity, BatchStudyDataEntity>(CHUNK_SIZE, transactionManager)
+            .chunk<ReadJpaEntity, ReadJpaEntity>(CHUNK_SIZE, transactionManager)
 //            .reader(batch02JpaPagingReader())
 //            .reader(batch02JdbcCursorReader())
             .reader(batch02QueryDslPagingReader())
@@ -56,8 +56,8 @@ class Batch02(
     }
 
     @Bean
-    fun batch02JpaPagingReader(): JpaPagingItemReader<BatchStudyDataEntity> {
-        return JpaPagingItemReaderBuilder<BatchStudyDataEntity>()
+    fun batch02JpaPagingReader(): JpaPagingItemReader<ReadJpaEntity> {
+        return JpaPagingItemReaderBuilder<ReadJpaEntity>()
             .name("batch02Reader")
             .pageSize(CHUNK_SIZE)
             .entityManagerFactory(entityManagerFactory)
@@ -66,39 +66,39 @@ class Batch02(
     }
 
     @Bean
-    fun batch02JdbcCursorReader(): JdbcCursorItemReader<BatchStudyDataEntity> {
-        return JdbcCursorItemReaderBuilder<BatchStudyDataEntity>()
+    fun batch02JdbcCursorReader(): JdbcCursorItemReader<ReadJpaEntity> {
+        return JdbcCursorItemReaderBuilder<ReadJpaEntity>()
             .name("batch02Reader")
-            .rowMapper(DataClassRowMapper(BatchStudyDataEntity::class.java))
+            .rowMapper(DataClassRowMapper(ReadJpaEntity::class.java))
             .sql("SELECT id, name, birthday, address FROM batch_study_data_entity b order by id desc")
             .dataSource(dataSource)
             .build()
     }
 
     @Bean
-    fun batch02QueryDslPagingReader(): QuerydslNoOffsetPagingItemReader<BatchStudyDataEntity> {
-        return QuerydslNoOffsetPagingItemReaderBuilder<BatchStudyDataEntity> {
+    fun batch02QueryDslPagingReader(): QuerydslNoOffsetPagingItemReader<ReadJpaEntity> {
+        return QuerydslNoOffsetPagingItemReaderBuilder<ReadJpaEntity> {
             enf = entityManagerFactory
-            options = QuerydslNoOffsetNumberOptions(batchStudyDataEntity.id, Expression.DESC)
+            options = QuerydslNoOffsetNumberOptions(readJpaEntity.id, Expression.DESC)
             pageSize = CHUNK_SIZE
             queryFunction = Function {
                 it.query()
-                    .select(batchStudyDataEntity)
-                    .from(batchStudyDataEntity)
+                    .select(readJpaEntity)
+                    .from(readJpaEntity)
             }
         }.build()
     }
 
     @Bean
-    fun batch02Writer(): FlatFileItemWriter<BatchStudyDataEntity> {
-        val extractor = BeanWrapperFieldExtractor<BatchStudyDataEntity>()
+    fun batch02Writer(): FlatFileItemWriter<ReadJpaEntity> {
+        val extractor = BeanWrapperFieldExtractor<ReadJpaEntity>()
         extractor.setNames(arrayOf("id", "name", "birthday", "address"))
 
-        val aggregator = DelimitedLineAggregator<BatchStudyDataEntity>()
+        val aggregator = DelimitedLineAggregator<ReadJpaEntity>()
         aggregator.setDelimiter(",")
         aggregator.setFieldExtractor(extractor)
 
-        return FlatFileItemWriterBuilder<BatchStudyDataEntity>()
+        return FlatFileItemWriterBuilder<ReadJpaEntity>()
             .name("batch02Writer")
             .encoding("UTF-8")
             .resource(FileSystemResource("output/test.csv"))
