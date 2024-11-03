@@ -1,12 +1,12 @@
 package kgp.liivm.batchstudy.batch02
 
-import com.querydsl.core.types.dsl.NumberPath
 import jakarta.persistence.EntityManagerFactory
 import kgp.liivm.batchstudy.common.entity.BatchStudyDataEntity
 import kgp.liivm.batchstudy.common.entity.QBatchStudyDataEntity.batchStudyDataEntity
-import kgp.liivm.batchstudy.common.querydsl_reader.QueryDslPagingItemReader
+import kgp.liivm.batchstudy.common.entity.QuerydslNoOffsetPagingItemReaderBuilder
+import kgp.liivm.batchstudy.common.querydsl_reader.QuerydslNoOffsetPagingItemReader
 import kgp.liivm.batchstudy.common.querydsl_reader.expression.Expression
-import kgp.liivm.batchstudy.common.querydsl_reader.options.QuerydslNoOffsetLongOptions
+import kgp.liivm.batchstudy.common.querydsl_reader.options.QuerydslNoOffsetNumberOptions
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobScope
@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.FileSystemResource
 import org.springframework.jdbc.core.DataClassRowMapper
 import org.springframework.transaction.PlatformTransactionManager
-import java.lang.reflect.Method
+import java.util.function.Function
 import javax.sql.DataSource
 
 @Configuration
@@ -76,25 +76,17 @@ class Batch02(
     }
 
     @Bean
-    fun batch02QueryDslPagingReader(): QueryDslPagingItemReader<BatchStudyDataEntity> {
-        val identifier: NumberPath<Long> = batchStudyDataEntity.id
-        val method: Method = BatchStudyDataEntity::class.java.getMethod("getId")
-
-        val queryDslPagingItemReader = QueryDslPagingItemReader<BatchStudyDataEntity>(
-            entityManagerFactory,
-            identifier,
-            method,
-            QuerydslNoOffsetLongOptions(batchStudyDataEntity.id, Expression.ASC)
-        )
-        queryDslPagingItemReader.pageSize = CHUNK_SIZE
-
-        queryDslPagingItemReader.queryFunction {
-            it.query()
-                .select(batchStudyDataEntity)
-                .from(batchStudyDataEntity)
-        }
-
-        return queryDslPagingItemReader
+    fun batch02QueryDslPagingReader(): QuerydslNoOffsetPagingItemReader<BatchStudyDataEntity> {
+        return QuerydslNoOffsetPagingItemReaderBuilder<BatchStudyDataEntity> {
+            enf = entityManagerFactory
+            options = QuerydslNoOffsetNumberOptions(batchStudyDataEntity.id, Expression.DESC)
+            pageSize = CHUNK_SIZE
+            queryFunction = Function {
+                it.query()
+                    .select(batchStudyDataEntity)
+                    .from(batchStudyDataEntity)
+            }
+        }.build()
     }
 
     @Bean
