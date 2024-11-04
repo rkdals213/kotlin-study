@@ -44,6 +44,9 @@ dependencies {
 
     implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
     implementation("com.querydsl:querydsl-apt:5.1.0:jakarta")
+
+    implementation("org.jetbrains.exposed:exposed-spring-boot-starter:0.56.0")
+    implementation("org.jetbrains.exposed:exposed-java-time:0.56.0")
 }
 
 kotlin {
