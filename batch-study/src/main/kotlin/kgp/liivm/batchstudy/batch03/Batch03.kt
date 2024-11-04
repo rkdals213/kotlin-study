@@ -6,8 +6,7 @@ import kgp.liivm.batchstudy.common.exposed.WriteExposedEntity
 import kgp.liivm.batchstudy.common.jpa.QWriteJpaEntity.writeJpaEntity
 import kgp.liivm.batchstudy.common.jpa.ReadJpaEntity
 import kgp.liivm.batchstudy.common.jpa.WriteJpaEntity
-import org.jetbrains.exposed.sql.statements.BatchInsertStatement
-import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.batchInsert
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobScope
@@ -119,14 +118,11 @@ class Batch03(
     @Bean // 3초
     fun batch03ExposedWriter(): ItemWriter<ReadJpaEntity> {
         return ItemWriter { list ->
-            BatchInsertStatement(WriteExposedEntity).apply {
-                list.forEach {
-                    addBatch()
-                    this[WriteExposedEntity.name] = it.name
-                    this[WriteExposedEntity.birthday] = it.birthday
-                    this[WriteExposedEntity.address] = it.address
-                }
-            }.execute(TransactionManager.current())
+            WriteExposedEntity.batchInsert(list) {
+                this[WriteExposedEntity.name] = it.name
+                this[WriteExposedEntity.birthday] = it.birthday
+                this[WriteExposedEntity.address] = it.address
+            }
         }
     }
 
