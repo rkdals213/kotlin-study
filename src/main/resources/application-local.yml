@@ -15,8 +15,6 @@ spring:
     hibernate:
       ddl-auto: create
     defer-datasource-initialization: true
-  exposed:
-    show-sql: true
 
 logging:
   level:

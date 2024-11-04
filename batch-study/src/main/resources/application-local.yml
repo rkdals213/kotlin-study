@@ -25,5 +25,5 @@ logging:
       hibernate:
         SQL: debug
         orm.jdbc.bind: trace
-#      springframework: debug
+      springframework: debug
 

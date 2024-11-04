@@ -8,6 +8,4 @@ object WriteExposedEntity : Table("batch_study_data_entity2") {
     val name = varchar("name", 255)
     val birthday = date("birthday")
     val address = varchar("address", 255)
-
-    override val primaryKey = PrimaryKey(id)
 }

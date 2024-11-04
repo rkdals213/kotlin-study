@@ -17,8 +17,8 @@ class AcceptanceTestExecutionListener : AbstractTestExecutionListener() {
     }
 
     override fun beforeTestMethod(testContext: TestContext) {
-        clearDatabaseWithJDBC(testContext)
-//        clearDatabaseWithJPA(testContext)
+//        clearDatabaseWithJDBC(testContext)
+        clearDatabaseWithJPA(testContext)
     }
 
     private fun clearDatabaseWithJPA(testContext: TestContext) {
@@ -65,6 +65,6 @@ class AcceptanceTestExecutionListener : AbstractTestExecutionListener() {
     }
 
     private fun getTableNames(jdbcTemplate: JdbcTemplate): List<String> {
-        return jdbcTemplate.queryForList("SELECT CONCAT(TABLE_SCHEMA, '.', TABLE_NAME) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA IN ('KOTLIN_STUDY', 'PUBLIC')", String::class.java)
+        return jdbcTemplate.queryForList("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA IN ('KOTLIN_STUDY', 'PUBLIC')", String::class.java)
     }
 }

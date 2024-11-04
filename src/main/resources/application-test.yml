@@ -15,13 +15,9 @@ spring:
     hibernate:
       ddl-auto: create
     defer-datasource-initialization: true
-  exposed:
-    show-sql: true
-    generate-ddl: true
 
 logging:
   level:
     org.hibernate.SQL: debug
     org.springframework.jdbc: debug
-    Exposed: debug
 #    org.hibernate.type: trace
