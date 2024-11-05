@@ -15,3 +15,17 @@ import org.springframework.test.context.TestExecutionListeners
 )
 @ActiveProfiles("test")
 annotation class AcceptanceTest
+
+
+
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+@SpringBootTest(
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+)
+@TestExecutionListeners(
+    value = [ExposedAcceptanceTestExecutionListener::class],
+    mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS
+)
+@ActiveProfiles("test")
+annotation class ExposedAcceptanceTest

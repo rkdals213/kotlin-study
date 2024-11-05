@@ -23,4 +23,6 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.springframework.jdbc: debug
+    Exposed: debug
+
 #    org.hibernate.type: trace

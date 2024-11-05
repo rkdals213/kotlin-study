@@ -19,11 +19,13 @@ class TestEnvTest : FunSpec({
                 }
             """.trimIndent()
 
-            postResource(
+            val response = postResource(
                 request = givenRequestSpecification(),
                 url = "/kotest-restassured",
                 body = body
             )
+
+            response.statusCode() shouldBe 200
         }
     }
 
@@ -46,6 +48,7 @@ class TestEnvTest : FunSpec({
                 url = "/kotest-restassured/get",
             )
 
+            response.statusCode() shouldBe 200
             response.jsonPath().getInt("body[0].id") shouldBe 1
             response.jsonPath().getString("body[0].data") shouldBe "data 1"
         }

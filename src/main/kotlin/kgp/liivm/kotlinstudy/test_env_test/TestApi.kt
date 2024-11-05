@@ -1,6 +1,7 @@
 package kgp.liivm.kotlinstudy.test_env_test
 
 import kgp.liivm.kotlinstudy.api_response.ApiResponse
+import kgp.liivm.kotlinstudy.common.config.Tx
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -17,7 +18,9 @@ class TestApi(
 
     @PostMapping("/insert")
     fun test02(@RequestBody testData: TestData) {
-        testEntityRepository.save(TestEntity(data = testData.data))
+        Tx.jpaTxm {
+            testEntityRepository.save(TestEntity(data = testData.data))
+        }
     }
 
     @GetMapping("/get")
