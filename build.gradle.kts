@@ -23,8 +23,10 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    testImplementation("io.projectreactor:reactor-test")
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
@@ -47,6 +49,8 @@ dependencies {
 
     implementation("org.jetbrains.exposed:exposed-spring-boot-starter:0.56.0")
     implementation("org.jetbrains.exposed:exposed-java-time:0.56.0")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
 }
 
 kotlin {

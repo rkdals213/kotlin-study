@@ -18,6 +18,9 @@ spring:
   exposed:
     show-sql: true
     generate-ddl: true
+  threads:
+    virtual:
+      enabled: true
 
 logging:
   level:
