@@ -3,10 +3,10 @@ package kgp.liivm.kotlinstudy.test.test_env_test
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.shouldBe
+import kgp.liivm.kotlinstudy.common.acceptance.AcceptanceTest
 import kgp.liivm.kotlinstudy.common.acceptance.getResource
 import kgp.liivm.kotlinstudy.common.acceptance.givenRequestSpecification
 import kgp.liivm.kotlinstudy.common.acceptance.postResource
-import kgp.liivm.kotlinstudy.common.acceptance.AcceptanceTest
 
 @AcceptanceTest
 class TestEnvTest : FunSpec({

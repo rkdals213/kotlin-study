@@ -1,13 +1,13 @@
 package kgp.liivm.kotlinstudy.test.virtual_thread
 
 import io.kotest.core.spec.style.FunSpec
-import kgp.liivm.kotlinstudy.common.acceptance.AcceptanceTest
 import kgp.liivm.kotlinstudy.virtual_thread.VirtualThreadFeignClient
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.web.reactive.function.client.WebClient
 import java.util.concurrent.Executors
 import kotlin.time.measureTime
 
-@AcceptanceTest
+@SpringBootTest
 class VirtualThreadApiTest(
     private val feignClient: VirtualThreadFeignClient
 ) : FunSpec({

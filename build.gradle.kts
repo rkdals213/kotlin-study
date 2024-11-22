@@ -34,8 +34,8 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     testImplementation("io.mockk:mockk:1.13.12")
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.9.1")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.9.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
+    testImplementation("io.kotest:kotest-assertions-core:5.9.1")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.3.0")
 
     testImplementation("io.rest-assured:rest-assured:5.5.0")
@@ -51,6 +51,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-java-time:0.56.0")
 
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
+
+    implementation("io.arrow-kt:arrow-core:1.2.4")
 }
 
 kotlin {
