@@ -36,6 +36,8 @@ dependencies {
 
     implementation("org.jetbrains.exposed:exposed-spring-boot-starter:0.56.0")
     implementation("org.jetbrains.exposed:exposed-java-time:0.56.0")
+
+    implementation("org.springframework.kafka:spring-kafka")
 }
 
 kotlin {
